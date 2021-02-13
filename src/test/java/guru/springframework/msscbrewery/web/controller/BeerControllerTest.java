@@ -3,9 +3,9 @@ package guru.springframework.msscbrewery.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.msscbrewery.services.BeerService;
 import guru.springframework.msscbrewery.web.model.BeerDto;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.snippet.Attributes;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
@@ -32,7 +31,6 @@ import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(BeerController.class)
 @AutoConfigureRestDocs(uriHost = "somesite.com", uriPort = 80)
 public class BeerControllerTest {
@@ -51,7 +49,7 @@ public class BeerControllerTest {
     ConstraintDescriptions beerDtoConstraints = new ConstraintDescriptions(BeerDto.class);
     ConstraintsDescriptor beerDtoConstraintsDescriptor = new ConstraintsDescriptor(BeerDto.class);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validBeer = BeerDto.builder().id(UUID.randomUUID())
                 .beerName("Beer1")
@@ -66,7 +64,7 @@ public class BeerControllerTest {
 
         mockMvc.perform(get("/api/v1/beer/{beerId}", validBeer.getId().toString()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(validBeer.getId().toString())))
                 .andExpect(jsonPath("$.beerName", is("Beer1")))
                 .andDo(document(
@@ -154,7 +152,10 @@ public class BeerControllerTest {
         }
 
         public Attributes.Attribute constraints(String path) {
-            return key("constraints").value(beerDtoConstraints.descriptionsForProperty(path).stream().collect(Collectors.joining(".")));
+            return key("constraints")
+                    .value(beerDtoConstraints.descriptionsForProperty(path)
+                            .stream()
+                            .collect(Collectors.joining(". ")));
         }
 
         public FieldDescriptor withPath(String path) {
