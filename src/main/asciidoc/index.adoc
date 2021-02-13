@@ -1,0 +1,46 @@
+= Beer service REST Docs
+
+== GET Beer
+
+.Request
+include::{snippets}/api/v1/beer-get/http-request.adoc[]
+
+.Path parameters
+include::{snippets}/api/v1/beer-get/path-parameters.adoc[]
+
+.Response
+include::{snippets}/api/v1/beer-get/http-response.adoc[]
+
+.Example curl request
+include::{snippets}/api/v1/beer-get/curl-request.adoc[]
+
+== Save Beer
+
+.Request
+include::{snippets}/api/v1/beer-save/http-request.adoc[]
+
+.Request body fields
+include::{snippets}/api/v1/beer-save/request-fields.adoc[]
+
+.Response
+include::{snippets}/api/v1/beer-save/http-response.adoc[]
+
+.Example curl request
+include::{snippets}/api/v1/beer-save/curl-request.adoc[]
+
+== Update Beer
+
+.Request
+include::{snippets}/api/v1/beer-update/http-request.adoc[]
+
+.Path parameters
+include::{snippets}/api/v1/beer-get/path-parameters.adoc[]
+
+.Request body fields
+include::{snippets}/api/v1/beer-update/request-fields.adoc[]
+
+.Response
+include::{snippets}/api/v1/beer-update/http-response.adoc[]
+
+.Example curl request
+include::{snippets}/api/v1/beer-update/curl-request.adoc[]
